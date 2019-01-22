@@ -186,6 +186,7 @@ public class SingleModeController implements Initializable {
     void playHard(ActionEvent event) {
         if (RadioButtonHard.isSelected()) {
             RadioButtonHard.setText("hard mode");
+            System.out.println("this is hard mode");
         } else {
             RadioButtonHard.setText("easy mode");
         }
