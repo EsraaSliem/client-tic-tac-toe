@@ -75,7 +75,7 @@ public class MyControoler {
     boolean accept = false;
 
     public static void requestGame(UserModel selectedItem) throws RemoteException, NotBoundException {
-
+ 
         Thread thread;
         thread = new Thread(new Runnable() {
 
