@@ -98,14 +98,14 @@ public class MyControoler {
                                     }
                                 } catch (NullPointerException ex) {
                                     System.out.println("NullPointerException");
-                                    JOptionPane.showMessageDialog(null, " some thing wrong");
+                                    JOptionPane.showMessageDialog(null, " some thing wrong","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
                                 } catch (ConnectException ex) {
                                     System.out.println("connection exception");
 
-                                    JOptionPane.showMessageDialog(null, "ConnectException");
+                                    JOptionPane.showMessageDialog(null, "ConnectException","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
                                 } catch (RemoteException ex) {
                                     System.out.println("connection exception");
-                                    JOptionPane.showMessageDialog(null, "ConnectException");
+                                    JOptionPane.showMessageDialog(null, "ConnectException","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
 
                                 }
 

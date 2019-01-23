@@ -711,7 +711,7 @@ public class TicTacTocGame {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null, "replay the last game ?");
+                        int recordResult = JOptionPane.showConfirmDialog(null, "replay the last game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
                         if (recordResult == 0) {
                             displayRecord();
                             singlemodeController.play.setVisible(true);
