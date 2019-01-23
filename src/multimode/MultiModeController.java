@@ -177,6 +177,7 @@ public class MultiModeController implements Initializable {
                             if (step != null) {
                                 myGridPane.setVisible(true);
                                 System.err.println("");
+                                System.err.println("");
                                 btnEndGame.setVisible(true);
                                 drawStep(step.getPosition(), step.getDraw());
                                 s = step.getDraw();
