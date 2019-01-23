@@ -101,6 +101,8 @@ public class MultiModeController implements Initializable {
     @FXML
     private Button btnEndGame;
 
+    @FXML
+    private Label userName;
     String s;
     XMLRecord recordObj = new XMLRecord();
 
@@ -130,6 +132,7 @@ public class MultiModeController implements Initializable {
     }
 
     public void startgame() {
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -141,14 +144,22 @@ public class MultiModeController implements Initializable {
 //                        Utils.showAlert(Alert.AlertType.CONFIRMATION, myGridPane.getScene().getWindow(), " ", "player "
 //                                + Utils.getlPayer().getUserName() + "accept playing ith you");
                         JOptionPane.showMessageDialog(null, "Game starts", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+
+                        try {
+                            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
+                        } catch (IOException ex) {
+                            Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         myGridPane.setVisible(true);
+                        btnEndGame.setVisible(true);
+
                     }
                 });
 
             }
         });
         thread.start();
-        clearGrid();
+
         txtFieldChat.setText("");
 
     }
@@ -165,6 +176,8 @@ public class MultiModeController implements Initializable {
                         if (controoler != null) {
                             if (step != null) {
                                 myGridPane.setVisible(true);
+
+                                btnEndGame.setVisible(true);
                                 drawStep(step.getPosition(), step.getDraw());
                                 s = step.getDraw();
                                 ClintImp.isReceving = false;
@@ -237,6 +250,7 @@ public class MultiModeController implements Initializable {
                                         public void run() {
                                             if (Utils.isPlaying) {
                                                 myGridPane.setVisible(true);
+
                                             } else {
                                             }
 
@@ -270,6 +284,9 @@ public class MultiModeController implements Initializable {
         lable7.setText("");
         lable8.setText("");
         lable9.setText("");
+        for (int i = 0; i < game_arr.length; i++) {
+            game_arr[i] = 0;
+        }
     }
 
     private class UserListAdapter extends ListCell<UserModel> {
@@ -402,6 +419,7 @@ public class MultiModeController implements Initializable {
                         public void run() {
                             if (Utils.isPlaying) {
                                 myGridPane.setVisible(true);
+
                             } else {
                             }
                         }
@@ -426,7 +444,8 @@ public class MultiModeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-
+            btnEndGame.setVisible(false);
+            userName.setText(Utils.getCurrentUser().getUserName());
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -451,7 +470,6 @@ public class MultiModeController implements Initializable {
 
                 }
             }).start();
-
             record.setVisible(false);
             onlineUsersList = accountHandler.getOnlinePlayer();
             list = FXCollections.observableArrayList(onlineUsersList);
@@ -463,7 +481,6 @@ public class MultiModeController implements Initializable {
                     list.remove(i);
                 }
             }
-
         } catch (RemoteException ex) {
             System.err.println(ex.getMessage());
         } catch (Exception ex) {
@@ -550,6 +567,8 @@ public class MultiModeController implements Initializable {
                                         public void run() {
                                             if (Utils.isPlaying) {
                                                 myGridPane.setVisible(true);
+
+                                                btnEndGame.setVisible(true);
                                             } else {
                                             }
 
@@ -679,11 +698,12 @@ public class MultiModeController implements Initializable {
                         if (recordResult == 0) {
 
                             displayRecord();
+                            btnEndGame.setVisible(false);
                             record.setVisible(true);
 
                         } else {
                             record.setVisible(false);
-
+                            btnEndGame.setVisible(false);
                         }
 
                     }
@@ -782,7 +802,8 @@ public class MultiModeController implements Initializable {
                 try {
                     accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
                 } catch (RemoteException ex) {
-                    Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println("ex");
+
                 }
                 return true;
             }
@@ -946,13 +967,17 @@ public class MultiModeController implements Initializable {
     @FXML
     void btnEndGameAction(ActionEvent event) {
         try {
-          //end game
-          //update other player score (not done)
+            //end game
+            //update other player score (not done)
             accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
             accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+            btnEndGame.setVisible(false);
+            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
+
         } catch (Exception ex) {
-         System.out.println("remote ex");
+            System.out.println("remote ex");
         }
 
     }
+
 }
