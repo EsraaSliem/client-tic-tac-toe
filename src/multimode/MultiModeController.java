@@ -450,7 +450,7 @@ public class MultiModeController implements Initializable {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(50);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -686,7 +686,7 @@ public class MultiModeController implements Initializable {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(50);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
