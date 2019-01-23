@@ -43,7 +43,7 @@
                 </AnchorPane>
                 <AnchorPane maxHeight="50.0" maxWidth="450.0" minHeight="50.0" minWidth="450.0" prefHeight="50.0" prefWidth="450.0" style="-fx-background-color: #039BE5;">
                     <children>
-                        <Label maxHeight="50.0" maxWidth="450.0" minHeight="50.0" minWidth="450.0" prefHeight="50.0" prefWidth="450.0" text="Player Name" textFill="WHITE">
+                        <Label fx:id="userName" maxHeight="50.0" maxWidth="450.0" minHeight="50.0" minWidth="450.0" prefHeight="50.0" prefWidth="450.0" text="Player Name" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>

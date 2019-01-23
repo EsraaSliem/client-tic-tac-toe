@@ -51,11 +51,11 @@ public class LoginController implements Initializable {
         try {
             UserAccountHandler accountHandler;
 
-            if (!Connection.isConneted()) {
-                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "Sin up  Error!", "check internet connection");
-                return;
-
-            }
+//            if (!Connection.isConneted()) {
+//                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "Sin up  Error!", "check internet connection");
+//                return;
+//
+//            }
             accountHandler = Utils.establishConnection();
 
             UserModel model = accountHandler.login(new ClintImp(), txtUserName.getText(), txtPassword.getText());
@@ -69,16 +69,15 @@ public class LoginController implements Initializable {
             }
 
         } catch (RemoteException ex) {
-            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later RemoteException");
         } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later IOException");
         } catch (NotBoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later NotBoundException");
 
         } catch (NullPointerException ex) {
-            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later");
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later NullPointerException");
         }
     }
 

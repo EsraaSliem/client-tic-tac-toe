@@ -101,6 +101,8 @@ public class MultiModeController implements Initializable {
     @FXML
     private Button btnEndGame;
 
+    @FXML
+    private Label userName;
     String s;
     XMLRecord recordObj = new XMLRecord();
 
@@ -443,11 +445,12 @@ public class MultiModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             btnEndGame.setVisible(false);
+            userName.setText(Utils.getCurrentUser().getUserName());
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(50);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -467,7 +470,6 @@ public class MultiModeController implements Initializable {
 
                 }
             }).start();
-
             record.setVisible(false);
             onlineUsersList = accountHandler.getOnlinePlayer();
             list = FXCollections.observableArrayList(onlineUsersList);
@@ -479,7 +481,6 @@ public class MultiModeController implements Initializable {
                     list.remove(i);
                 }
             }
-
         } catch (RemoteException ex) {
             System.err.println(ex.getMessage());
         } catch (Exception ex) {
@@ -685,7 +686,7 @@ public class MultiModeController implements Initializable {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(50);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
