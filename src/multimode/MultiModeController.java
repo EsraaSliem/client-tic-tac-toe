@@ -152,6 +152,9 @@ public class MultiModeController implements Initializable {
                         }
                         myGridPane.setVisible(true);
                         btnEndGame.setVisible(true);
+                        txtAreaChat.setVisible(true);
+                        txtFieldChat.setVisible(true);
+                        btnSendMessage.setVisible(true);
 
                     }
                 });
@@ -179,6 +182,9 @@ public class MultiModeController implements Initializable {
                                 System.err.println("");
                                 System.err.println("");
                                 btnEndGame.setVisible(true);
+                                btnEndGame.setVisible(true);
+                        txtAreaChat.setVisible(true);
+                        txtFieldChat.setVisible(true);
                                 drawStep(step.getPosition(), step.getDraw());
                                 s = step.getDraw();
                                 ClintImp.isReceving = false;
@@ -446,6 +452,9 @@ public class MultiModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             btnEndGame.setVisible(false);
+            txtAreaChat.setVisible(false);
+            txtFieldChat.setVisible(false);
+            btnSendMessage.setVisible(false);
             userName.setText(Utils.getCurrentUser().getUserName());
             new Thread(new Runnable() {
                 @Override
@@ -484,7 +493,7 @@ public class MultiModeController implements Initializable {
             }
         } catch (RemoteException ex) {
             System.err.println(ex.getMessage());
-        } catch (Exception ex) {
+        } catch (Exception ex){
             System.err.println(ex.getMessage());
         }
 
@@ -568,7 +577,9 @@ public class MultiModeController implements Initializable {
                                         public void run() {
                                             if (Utils.isPlaying) {
                                                 myGridPane.setVisible(true);
-
+ txtAreaChat.setVisible(true);
+            txtFieldChat.setVisible(true);
+            btnSendMessage.setVisible(true);
                                                 btnEndGame.setVisible(true);
                                             } else {
                                             }
@@ -700,11 +711,17 @@ public class MultiModeController implements Initializable {
 
                             displayRecord();
                             btnEndGame.setVisible(false);
+                             txtAreaChat.setVisible(false);
+            txtFieldChat.setVisible(false);
+            btnSendMessage.setVisible(false);
                             record.setVisible(true);
 
                         } else {
                             record.setVisible(false);
                             btnEndGame.setVisible(false);
+                             txtAreaChat.setVisible(false);
+            txtFieldChat.setVisible(false);
+            btnSendMessage.setVisible(false);
                         }
 
                     }
@@ -802,7 +819,7 @@ public class MultiModeController implements Initializable {
                 newGame("you lose!");
                 try {
                     accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
-                } catch (RemoteException ex) {
+                } catch (RemoteException | NullPointerException ex) {
                     System.err.println("ex");
 
                 }
