@@ -6,6 +6,7 @@ public interface Constants {
 
     public final static String SERVER_IP_ADDRESS = "192.168.43.242";
 
+
     public final static int PORT = 5000;
     // Server Services
     public final static String ACCOUNT_SERVICE = "Account";
