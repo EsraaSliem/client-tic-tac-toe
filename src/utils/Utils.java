@@ -143,7 +143,6 @@ public class Utils {
     }
 
     public static UserModel getCurrentUser() {
-
         return model;
     }
 

@@ -41,6 +41,7 @@ import javax.swing.JOptionPane;
 import main.XMLRecord;
 import client.ClintImp;
 import client.TicTacTocGame;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import utils.SceneHandler;
@@ -112,7 +113,7 @@ public class MultiModeController implements Initializable {
     Utils util = new Utils();
     public ObservableList<UserModel> list;
     UserModel model;
-    List<UserModel> onlineUsersList;
+    public List<UserModel> onlineUsersList;
     MyControoler controoler;
 
     private UserAccountHandler accountHandler;
@@ -143,8 +144,7 @@ public class MultiModeController implements Initializable {
                     public void run() {
 //                        Utils.showAlert(Alert.AlertType.CONFIRMATION, myGridPane.getScene().getWindow(), " ", "player "
 //                                + Utils.getlPayer().getUserName() + "accept playing ith you");
-                        JOptionPane.showMessageDialog(null, "Game starts", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
-
+                        JOptionPane.showMessageDialog(null, "Let's Play", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                         try {
                             handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
                         } catch (IOException ex) {
@@ -436,7 +436,6 @@ public class MultiModeController implements Initializable {
             if (user != null && !empty) {
                 userNameLabel.setText(user.getUserName());
                 userScoreValueLabel.setText(user.getScore() + "");
-
                 setGraphic(pane);
             }
         }
@@ -472,16 +471,23 @@ public class MultiModeController implements Initializable {
                 }
             }).start();
             record.setVisible(false);
-            onlineUsersList = accountHandler.getOnlinePlayer();
-            list = FXCollections.observableArrayList(onlineUsersList);
-            txtAreaChat.setEditable(false);
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
-                    System.out.println(list.get(i).getEmailAddress());
 
-                    list.remove(i);
+            onlineUsersList = accountHandler.getOnlinePlayers();
+            if (onlineUsersList != null) {
+                list = FXCollections.observableArrayList(onlineUsersList);
+
+                if (list != null) {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
+                            System.out.println(list.get(i).getEmailAddress());
+                            list.remove(i);
+                        }
+                    }
                 }
             }
+
+            txtAreaChat.setEditable(false);
+
         } catch (RemoteException ex) {
             System.err.println(ex.getMessage());
         } catch (Exception ex) {
@@ -525,7 +531,7 @@ public class MultiModeController implements Initializable {
     void btnRefreshAction(MouseEvent event) {
 
         try {
-            onlineUsersList = accountHandler.getOnlinePlayer();
+            onlineUsersList = accountHandler.getOnlinePlayers();
             list = FXCollections.observableArrayList(onlineUsersList);
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
@@ -770,44 +776,42 @@ public class MultiModeController implements Initializable {
             newGame("no one win!");
 
             return true;
-        } else {
-            if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)
-                    || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
-                    || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
-                    || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
-                    || (game_arr[2] == 1 && game_arr[4] == 1 && game_arr[6] == 1)
-                    || (game_arr[0] == 1 && game_arr[3] == 1 && game_arr[6] == 1)
-                    || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
-                    || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
-                recordObj.marchal();
-                newGame("congratulation you win! ");
-                try {
-                    accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
-                } catch (RemoteException ex) {
-                    Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                return true;
-
-            } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
-                    || (game_arr[3] == 2 && game_arr[4] == 2 && game_arr[5] == 2)
-                    || (game_arr[6] == 2 && game_arr[7] == 2 && game_arr[8] == 2)
-                    || (game_arr[0] == 2 && game_arr[4] == 2 && game_arr[8] == 2)
-                    || (game_arr[2] == 2 && game_arr[4] == 2 && game_arr[6] == 2)
-                    || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
-                    || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
-                    || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
-                System.out.println("sorry you lose ");
-                recordObj.marchal();
-                newGame("you lose!");
-                try {
-                    accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
-                } catch (RemoteException ex) {
-                    System.err.println("ex");
-
-                }
-                return true;
+        } else if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)
+                || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
+                || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
+                || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
+                || (game_arr[2] == 1 && game_arr[4] == 1 && game_arr[6] == 1)
+                || (game_arr[0] == 1 && game_arr[3] == 1 && game_arr[6] == 1)
+                || (game_arr[1] == 1 && game_arr[4] == 1 && game_arr[7] == 1)
+                || (game_arr[2] == 1 && game_arr[5] == 1 && game_arr[8] == 1)) {
+            recordObj.marchal();
+            newGame("congratulation you win! ");
+            try {
+                accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
+            } catch (RemoteException ex) {
+                Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            return true;
+
+        } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
+                || (game_arr[3] == 2 && game_arr[4] == 2 && game_arr[5] == 2)
+                || (game_arr[6] == 2 && game_arr[7] == 2 && game_arr[8] == 2)
+                || (game_arr[0] == 2 && game_arr[4] == 2 && game_arr[8] == 2)
+                || (game_arr[2] == 2 && game_arr[4] == 2 && game_arr[6] == 2)
+                || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
+                || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
+                || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
+            System.out.println("sorry you lose ");
+            recordObj.marchal();
+            newGame("you lose!");
+            try {
+                accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+            } catch (RemoteException ex) {
+                System.err.println("ex");
+
+            }
+            return true;
         }
         return false;
     }
@@ -817,7 +821,7 @@ public class MultiModeController implements Initializable {
 
         try {
             UserAccountHandler accountHandler1 = Utils.establishConnection();
-            onlineUsersList = accountHandler1.getOnlinePlayer();
+            onlineUsersList = accountHandler1.getOnlinePlayers();
             list = FXCollections.observableArrayList(onlineUsersList);
 
             //remove current user from list
@@ -979,6 +983,36 @@ public class MultiModeController implements Initializable {
             System.out.println("remote ex");
         }
 
+    }
+
+    public void refreshListt() {
+        try {
+            onlineUsersList = accountHandler.getOnlinePlayers();
+            list = FXCollections.observableArrayList(onlineUsersList);
+
+            if (list != null) {
+                for (int i = 0; i < list.size(); i++) {
+                    String emailAddress = list.get(i).getEmailAddress();
+                    UserModel curruentUser = Utils.getCurrentUser();
+                    if (emailAddress != null && curruentUser != null) {
+                        if (emailAddress.equals(Utils.getCurrentUser().getEmailAddress())) {
+                            System.out.println(emailAddress);
+                            list.remove(i);
+                        }
+                    }
+                    System.out.println("i = " + i);
+                }
+
+                listView.setItems(list);
+                listView.setCellFactory(param -> new UserListAdapter());
+                myGridPane.setVisible(false);
+            }
+
+        } catch (RemoteException ex) {
+            System.err.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 
 }

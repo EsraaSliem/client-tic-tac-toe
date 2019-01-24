@@ -65,11 +65,11 @@ public class LoginController implements Initializable {
                 handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
             } else {
                 // errorMessageLabel.setText("Wrong e-mail or password");
-                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", " wrong e-mail or password ");
+                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", "User is already logged in");
             }
 
         } catch (RemoteException ex) {
-            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later RemoteException");
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "Sorry, try again later ^-^");
         } catch (IOException ex) {
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later IOException");
         } catch (NotBoundException ex) {
