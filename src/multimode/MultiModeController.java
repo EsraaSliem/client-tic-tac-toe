@@ -41,9 +41,11 @@ import javax.swing.JOptionPane;
 import main.XMLRecord;
 import client.ClintImp;
 import client.TicTacTocGame;
+import java.lang.reflect.InvocationTargetException;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import utils.Constants;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -144,8 +146,11 @@ public class MultiModeController implements Initializable {
                     public void run() {
 //                        Utils.showAlert(Alert.AlertType.CONFIRMATION, myGridPane.getScene().getWindow(), " ", "player "
 //                                + Utils.getlPayer().getUserName() + "accept playing ith you");
+
                         JOptionPane.showMessageDialog(null, "Let's Play", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+
                         try {
+
                             handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
                         } catch (IOException ex) {
                             Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,6 +190,7 @@ public class MultiModeController implements Initializable {
                                 btnEndGame.setVisible(true);
                                 txtAreaChat.setVisible(true);
                                 txtFieldChat.setVisible(true);
+                                btnSendMessage.setVisible(true);
                                 drawStep(step.getPosition(), step.getDraw());
                                 s = step.getDraw();
                                 ClintImp.isReceving = false;
@@ -723,6 +729,7 @@ public class MultiModeController implements Initializable {
                             record.setVisible(true);
 
                         } else {
+                            clearGrid();
                             record.setVisible(false);
                             btnEndGame.setVisible(false);
                             txtAreaChat.setVisible(false);
@@ -788,12 +795,7 @@ public class MultiModeController implements Initializable {
 
     // check winner
     public boolean checkWinner() {
-        if (counter >= 8) {
-            recordObj.marchal();
-            newGame("no one win!");
-
-            return true;
-        } else if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)
+        if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)
                 || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
                 || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
                 || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
@@ -805,7 +807,8 @@ public class MultiModeController implements Initializable {
             newGame("congratulation you win! ");
             try {
                 accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
-            } catch (RemoteException ex) {
+            } catch (RemoteException | NullPointerException ex) {           
+                System.out.println("multimode.MultiModeController.checkWinner()");
                 Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -828,6 +831,11 @@ public class MultiModeController implements Initializable {
                 System.err.println("ex");
 
             }
+            return true;
+        } else if (counter >= 8) {
+            recordObj.marchal();
+            newGame("no one win!");
+
             return true;
         }
         return false;

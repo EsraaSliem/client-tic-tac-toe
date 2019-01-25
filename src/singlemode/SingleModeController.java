@@ -76,10 +76,11 @@ public class SingleModeController implements Initializable {
         game = new TicTacTocGame(this);
         try {TextInputDialog dialog = new TextInputDialog();
             while (!(Utils.validateName(userName))) {    
-                dialog.setTitle("Welcom To TecTacToe Game");
-                dialog.setHeaderText("Look, a Text Input Dialog");
+                dialog.setTitle("TicTacToe");
+                dialog.setHeaderText("Welcom To TicTacToe Game");
                 dialog.setContentText("Please enter your name:");
                 dialog.showAndWait();
+                
                 int x = dialog.getEditor().getText().length();
                 if (x < 9) {
                     userName = dialog.getEditor().getText();// JOptionPane.showInputDialog("please enter your name : ");
