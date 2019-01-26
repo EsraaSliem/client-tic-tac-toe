@@ -48,6 +48,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import utils.SceneHandler;
 import utils.Utils;
+import static utils.Utils.setSymbol;
 
 public class MultiModeView implements Initializable {
 
@@ -307,40 +308,7 @@ public class MultiModeView implements Initializable {
 
     }
 
-    public int requestGame(UserModel model1, UserModel player2) {
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("requestGame ");
-                if (Utils.getIsPlying()) {
-                    status = 0;
-                    System.out.println("is playing ");
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Confirmation Dialog");
-                    alert.setHeaderText(" replay the last game ?");
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK) {
-                        Utils.setPlayer(model1);
-                        Utils.setSymbol("o");
-                        Utils.isMyTurn = false;
-                        Utils.setIsPlaying(true);
-
-                        status = 1;
-                    } else {
-
-                        System.out.println("cancel ");
-                        status = 2;
-                    }
-
-                }
-
-            }
-        });
-
-        return status;
-    }
+   
 
     private class UserListAdapter extends ListCell<UserModel> {
 
@@ -739,8 +707,6 @@ public class MultiModeView implements Initializable {
                         Alert alert = new Alert(AlertType.CONFIRMATION);
                         alert.setTitle("Confirmation Dialog");
                         alert.setHeaderText(" replay the last game ?");
-                        //  alert.setContentText("Are you ok with this?");
-
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.get() == ButtonType.OK) {
                             displayRecord();
@@ -829,7 +795,7 @@ public class MultiModeView implements Initializable {
             newGame("congratulation you win! ");
             try {
                 accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
-                scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
+                scoreLable.setText("" + accountHandler.getUpdatedScore(Utils.getCurrentUser().getEmailAddress()));
 
             } catch (RemoteException | NullPointerException ex) {
                 System.out.println("multimode.MultiModeController.checkWinner()");
@@ -849,7 +815,7 @@ public class MultiModeView implements Initializable {
             newGame("you lose!");
             try {
                 accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
-                scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
+                scoreLable.setText("" + accountHandler.getUpdatedScore(Utils.getCurrentUser().getEmailAddress()));
             } catch (RemoteException | NullPointerException ex) {
                 System.err.println("ex");
 
@@ -1021,8 +987,7 @@ public class MultiModeView implements Initializable {
     @FXML
     void btnEndGameAction(ActionEvent event) {
         try {
-            //end game
-            //update other player score (not done)
+            
             Utils.setIsPlaying(false);
             accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
             accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
@@ -1030,13 +995,11 @@ public class MultiModeView implements Initializable {
             clearGrid();
             myGridPane.setVisible(false);
 
-//            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
         } catch (Exception ex) {
             System.out.println("remote ex");
         }
 
     }
-
     public void refreshListt() {
         try {
             onlineUsersList = accountHandler.getOnlinePlayers();
@@ -1052,7 +1015,6 @@ public class MultiModeView implements Initializable {
                             list.remove(i);
                         }
                     }
-                    System.out.println("i = " + i);
                 }
 
                 listView.setItems(list);

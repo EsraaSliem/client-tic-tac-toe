@@ -35,7 +35,8 @@ public class Utils {
     private static String symbol = "x";
     public static boolean isMyTurn;
     public static boolean logout;
-    
+    public static boolean bb;
+
     public static void setSymbol(String symbol) {
         Utils.symbol = symbol;
     }
@@ -52,11 +53,12 @@ public class Utils {
     public static boolean isPlaying = false;
 
     public static void setIsPlaying(boolean b) {
-        isPlaying=b;
+        bb = b;
     }
+
     public static boolean getIsPlying() {
-        return isPlaying;
-        
+        return bb;
+
     }
     SceneHandler handler = SceneHandler.getInstance();
 
