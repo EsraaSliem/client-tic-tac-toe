@@ -38,10 +38,29 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public int requestGame(UserModel model1, UserModel player2) throws RemoteException {
-       
 
-        return MultiModeView.getInstance().requestGame( model1, player2);
+        int status;
+        // 0 is playing 
+        // 1 accept
+        // 2  refuse 
 
+        if (Utils.getIsPlying()) {
+            status = 0;
+        } else {
+            int x = JOptionPane.showConfirmDialog(null, "player " + model1.getUserName() + " wants to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+
+            if (x == 0) {
+                Utils.setPlayer(model1);
+                Utils.setSymbol("o");
+                Utils.isMyTurn = false;
+                Utils.setIsPlaying(true);
+                status = 1;
+
+            } else {
+                status = 2;
+            }
+        }
+        return status;
     }
 
     @Override
@@ -52,8 +71,6 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void drawMove(Step step) throws RemoteException {
-        //  controoler.drawMove(step);
-//        controoler.dra(step);
         controoler.setStep(step);
         isReceving = true;
         MultiModeView.getInstance().receive(step);
