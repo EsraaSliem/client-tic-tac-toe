@@ -41,11 +41,8 @@ import javax.swing.JOptionPane;
 import main.XMLRecord;
 import client.ClintImp;
 import client.TicTacTocGame;
-import java.lang.reflect.InvocationTargetException;
-import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import utils.Constants;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -106,6 +103,8 @@ public class MultiModeView implements Initializable {
 
     @FXML
     private Label userName;
+    @FXML
+    private Label scoreLable;
     String s;
     XMLRecord recordObj = new XMLRecord();
 
@@ -238,9 +237,9 @@ public class MultiModeView implements Initializable {
 
     }
 
-    void showrefusedMessahe() {
-        JOptionPane.showMessageDialog(null, "sorry player" + Utils.getlPayer().getUserName()
-                + "refused to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+    void showRefusedMessahe() {
+        JOptionPane.showMessageDialog(null, "sorry player " + Utils.getlPayer().getUserName()
+                + " refused to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -297,6 +296,11 @@ public class MultiModeView implements Initializable {
         for (int i = 0; i < game_arr.length; i++) {
             game_arr[i] = 0;
         }
+    }
+
+    void showBusyMessage() {
+        JOptionPane.showMessageDialog(null, "sorry player " + Utils.getlPayer().getUserName()
+                + " is playing now", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private class UserListAdapter extends ListCell<UserModel> {
@@ -442,6 +446,7 @@ public class MultiModeView implements Initializable {
             super.updateItem(user, empty);
             if (user != null && !empty) {
                 userNameLabel.setText(user.getUserName());
+
                 userScoreValueLabel.setText(user.getScore() + "");
                 setGraphic(pane);
             }
@@ -456,6 +461,7 @@ public class MultiModeView implements Initializable {
             txtFieldChat.setVisible(false);
             btnSendMessage.setVisible(false);
             userName.setText(Utils.getCurrentUser().getUserName());
+            scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -542,6 +548,7 @@ public class MultiModeView implements Initializable {
 
         try {
             onlineUsersList = accountHandler.getOnlinePlayers();
+            scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
             list = FXCollections.observableArrayList(onlineUsersList);
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
@@ -781,11 +788,11 @@ public class MultiModeView implements Initializable {
             newGame("congratulation you win! ");
             try {
                 accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
+                scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
 
             } catch (RemoteException | NullPointerException ex) {
                 System.out.println("multimode.MultiModeController.checkWinner()");
             }
-
             return true;
 
         } else if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -801,6 +808,7 @@ public class MultiModeView implements Initializable {
             newGame("you lose!");
             try {
                 accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+                scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
             } catch (RemoteException | NullPointerException ex) {
                 System.err.println("ex");
 
@@ -973,6 +981,8 @@ public class MultiModeView implements Initializable {
         try {
             //end game
             //update other player score (not done)
+            Utils.setIsPlaying(false);
+
             accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
             accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
             btnEndGame.setVisible(false);

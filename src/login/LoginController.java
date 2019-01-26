@@ -54,14 +54,12 @@ public class LoginController implements Initializable {
             accountHandler = Utils.establishConnection();
 
             UserModel model = accountHandler.login(new ClintImp(), txtUserName.getText(), txtPassword.getText());
-
             if (model != null) {
                 Utils.setCurrentUser(model);
                 handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
             } else {
                 Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", "User is already logged in");
             }
-
         } catch (RemoteException ex) {
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "Sorry, try again later");
         } catch (IOException ex) {

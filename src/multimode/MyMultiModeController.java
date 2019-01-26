@@ -91,10 +91,12 @@ public class MyMultiModeController {
 
                             if ((accountHandler = Utils.establishConnection()) != null && selectedItem != null) {
                                 try {
-                                    if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)) {
+                                    if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)==0) {
+                                        
+                                        MultiModeView.getInstance().showBusyMessage();
 
-                                    } else {
-                                        MultiModeView.getInstance().showrefusedMessahe();
+                                    } else if(accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)==2) {
+                                        MultiModeView.getInstance().showRefusedMessahe();
                                     }
                                 } catch (NullPointerException ex) {
                                     System.out.println("NullPointerException");
