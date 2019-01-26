@@ -41,9 +41,11 @@ import javax.swing.JOptionPane;
 import main.XMLRecord;
 import client.ClintImp;
 import client.TicTacTocGame;
+import java.lang.reflect.InvocationTargetException;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import utils.Constants;
 import utils.SceneHandler;
 import utils.Utils;
 
@@ -142,8 +144,11 @@ public class MultiModeView implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
+
                         JOptionPane.showMessageDialog(null, "Let's Play", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+
                         try {
+
                             handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
                         } catch (IOException ex) {
                             Logger.getLogger(MultiModeView.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,7 +158,6 @@ public class MultiModeView implements Initializable {
                         txtAreaChat.setVisible(true);
                         txtFieldChat.setVisible(true);
                         btnSendMessage.setVisible(true);
-                        
 
                     }
                 });
@@ -182,6 +186,7 @@ public class MultiModeView implements Initializable {
                                 btnEndGame.setVisible(true);
                                 txtAreaChat.setVisible(true);
                                 txtFieldChat.setVisible(true);
+                                btnSendMessage.setVisible(true);
                                 drawStep(step.getPosition(), step.getDraw());
                                 s = step.getDraw();
                                 ClintImp.isReceving = false;
@@ -278,6 +283,7 @@ public class MultiModeView implements Initializable {
     }
 
     private void clearGrid() {
+
         lable1.setText("");
         lable2.setText("");
         lable3.setText("");
@@ -287,6 +293,7 @@ public class MultiModeView implements Initializable {
         lable7.setText("");
         lable8.setText("");
         lable9.setText("");
+        counter = 0;
         for (int i = 0; i < game_arr.length; i++) {
             game_arr[i] = 0;
         }
@@ -576,6 +583,7 @@ public class MultiModeView implements Initializable {
                                         @Override
                                         public void run() {
                                             if (Utils.isPlaying) {
+                                                clearGrid();
                                                 myGridPane.setVisible(true);
                                                 txtAreaChat.setVisible(true);
                                                 txtFieldChat.setVisible(true);
@@ -624,6 +632,7 @@ public class MultiModeView implements Initializable {
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
             if (MyMultiModeController.logOut()) {
+
                 handler.setScene("/sinup/signup.fxml", " Sin up  ", 800, 800, true);
 
             } else {
@@ -693,6 +702,8 @@ public class MultiModeView implements Initializable {
                             record.setVisible(true);
 
                         } else {
+                            clearGrid();
+                            myGridPane.setVisible(false);
                             record.setVisible(false);
                             btnEndGame.setVisible(false);
                             txtAreaChat.setVisible(false);
@@ -758,12 +769,7 @@ public class MultiModeView implements Initializable {
 
     // check winner
     public boolean checkWinner() {
-        if (counter >= 8) {
-            recordObj.marchal();
-            newGame("no one win!");
-
-            return true;
-        } else if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)
+        if ((game_arr[0] == 1 && game_arr[1] == 1 && game_arr[2] == 1)
                 || (game_arr[3] == 1 && game_arr[4] == 1 && game_arr[5] == 1)
                 || (game_arr[6] == 1 && game_arr[7] == 1 && game_arr[8] == 1)
                 || (game_arr[0] == 1 && game_arr[4] == 1 && game_arr[8] == 1)
@@ -775,8 +781,9 @@ public class MultiModeView implements Initializable {
             newGame("congratulation you win! ");
             try {
                 accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
-            } catch (RemoteException ex) {
-                Logger.getLogger(MultiModeView.class.getName()).log(Level.SEVERE, null, ex);
+
+            } catch (RemoteException | NullPointerException ex) {
+                System.out.println("multimode.MultiModeController.checkWinner()");
             }
 
             return true;
@@ -798,6 +805,11 @@ public class MultiModeView implements Initializable {
                 System.err.println("ex");
 
             }
+            return true;
+        } else if (counter >= 8) {
+            recordObj.marchal();
+            newGame("no one win!");
+
             return true;
         }
         return false;
@@ -964,9 +976,11 @@ public class MultiModeView implements Initializable {
             accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
             accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
             btnEndGame.setVisible(false);
-            myGridPane.setVisible(false);
-            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
 
+            clearGrid();
+            myGridPane.setVisible(false);
+
+//            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
         } catch (Exception ex) {
             System.out.println("remote ex");
         }

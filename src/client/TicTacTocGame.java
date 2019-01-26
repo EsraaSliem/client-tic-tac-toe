@@ -166,7 +166,7 @@ public class TicTacTocGame {
             gameNum++;
             singlemodeController.userScoreLbl.setText(Score + "");
             singlemodeController.numMatch.setText(gameNum + "");
-            newGame();
+            newGame("congratulation, you win! ");
             return true;
         } else {
             if ((game_arr[0] == 2 && game_arr[1] == 2 && game_arr[2] == 2)
@@ -183,179 +183,13 @@ public class TicTacTocGame {
                 gameNum++;
                 singlemodeController.userScoreLbl.setText(Score + "");
                 singlemodeController.numMatch.setText(gameNum + "");
-                newGame();
+                newGame("You lose! ");
                 return true;
             }
         }
         return false;
     }
 
-//    public int checkWiningCell() {
-//        if (game_arr[0] == 2 && game_arr[1] == 2) {
-//            return 2;
-//        } else if (game_arr[3] == 2 && game_arr[4] == 2) {
-//            return 5;
-//        } else if (game_arr[6] == 2 && game_arr[7] == 2) {
-//            return 8;
-//        } else if (game_arr[8] == 2 && game_arr[7] == 2) {
-//            return 6;
-//        } else if (game_arr[5] == 2 && game_arr[4] == 2) {
-//            return 3;
-//        } else if (game_arr[2] == 2 && game_arr[1] == 2) {
-//            return 0;
-//        } else if (game_arr[7] == 2 && game_arr[4] == 2) {
-//            return 1;
-//        } else if (game_arr[1] == 2 && game_arr[4] == 2) {
-//            return 7;
-//        } else if (game_arr[2] == 2 && game_arr[4] == 2) {
-//            return 6;
-//        } else if (game_arr[8] == 2 && game_arr[4] == 2) {
-//            return 0;
-//        } else if (game_arr[0] == 2 && game_arr[4] == 2) {
-//            return 8;
-//        } else if (game_arr[6] == 2 && game_arr[4] == 2) {
-//            return 2;
-//        } else if (game_arr[2] == 2 && game_arr[8] == 2) {
-//            return 5;
-//        } else if (game_arr[0] == 2 && game_arr[6] == 2) {
-//            return 3;
-//        } else if (game_arr[0] == 2 && game_arr[2] == 2) {
-//            return 1;
-//        } else if (game_arr[6] == 2 && game_arr[8] == 2) {
-//            return 7;
-//        } else if (game_arr[3] == 2 && game_arr[5] == 2) {
-//            return 4;
-//        } else if (game_arr[1] == 2 && game_arr[7] == 2) {
-//            return 4;
-//        } else {
-//            return -1;
-//        }
-//    }
-//
-//    public int checkLostedCell() {
-//        if (game_arr[0] == 1 && game_arr[1] == 1) {
-//            return 3;
-//        } else if (game_arr[3] == 1 && game_arr[4] == 1) {
-//            return 5;
-//        } else if (game_arr[6] == 1 && game_arr[7] == 1) {
-//            return 8;
-//        } else if (game_arr[8] == 1 && game_arr[7] == 1) {
-//            return 6;
-//        } else if (game_arr[5] == 1 && game_arr[4] == 1) {
-//            return 3;
-//        } else if (game_arr[2] == 1 && game_arr[1] == 1) {
-//            return 0;
-//        } else if (game_arr[7] == 1 && game_arr[4] == 1) {
-//            return 1;
-//        } else if (game_arr[1] == 1 && game_arr[4] == 1) {
-//            return 7;
-//        } else if (game_arr[2] == 1 && game_arr[4] == 1) {
-//            return 6;
-//        } else if (game_arr[8] == 1 && game_arr[4] == 1) {
-//            return 0;
-//        } else if (game_arr[0] == 1 && game_arr[4] == 1) {
-//            return 8;
-//        } else if (game_arr[6] == 1 && game_arr[4] == 1) {
-//            return 2;
-//        } else if (game_arr[2] == 1 && game_arr[8] == 1) {
-//            return 5;
-//        } else if (game_arr[0] == 1 && game_arr[6] == 1) {
-//            return 3;
-//        } else if (game_arr[0] == 1 && game_arr[2] == 1) {
-//            return 1;
-//        } else if (game_arr[6] == 1 && game_arr[8] == 1) {
-//            return 7;
-//        } else if (game_arr[3] == 1 && game_arr[5] == 1) {
-//            return 4;
-//        } else if (game_arr[1] == 1 && game_arr[7] == 1) {
-//            return 4;
-//        } else {
-//            return -1;
-//        }
-//    }
-//    public int positionsOfTwoPlayers() {
-////        try {
-////            Thread.sleep(5000);
-////        } catch (InterruptedException ex) {
-////            Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
-////        }
-//
-//        if (checkLostedCell() != -1) {
-//            if (setGame_arr(checkLostedCell())) {
-//               // setGame_arr(checkLostedCell());
-//                return checkLostedCell();
-//            } else if (checkWiningCell() != -1) {
-//               setGame_arr(checkWiningCell());
-//                return checkWiningCell();
-//            } else if (game_arr[4] == 0) {
-//
-//                setGame_arr(4);
-//                return 4;
-//
-//            } else if (game_arr[0] == 0) {
-//
-//                setGame_arr(0);
-//                return 0;
-//
-//            } else if (game_arr[2] == 0) {
-//
-//                setGame_arr(2);
-//                return 2;
-//
-//            } else if (game_arr[6] == 0) {
-//
-//                setGame_arr(6);
-//                return 6;
-//
-//            } else if (game_arr[8] == 0) {
-//
-//                setGame_arr(8);
-//                return 8;
-//
-//            } else {
-//                // setGame_arr(getRandom());
-//                return getRandom();
-//            }
-//
-//        } else if (checkWiningCell() != -1) {
-//            setGame_arr(checkWiningCell());
-//            return checkWiningCell();
-//        } else if (game_arr[4] == 0) {
-//
-//            setGame_arr(4);
-//            return 4;
-//
-//        } else if (game_arr[0] == 0) {
-//
-//            setGame_arr(0);
-//            return 0;
-//
-//        } else if (game_arr[2] == 0) {
-//
-//            setGame_arr(2);
-//            return 2;
-//
-//        } else if (game_arr[6] == 0) {
-//
-//            setGame_arr(6);
-//            return 6;
-//
-//        } else if (game_arr[8] == 0) {
-//
-//            setGame_arr(8);
-//            return 8;
-//
-//        } else {
-//            //setGame_arr(getRandom());
-//            if (checkWiningCell() != -1) {
-//                setGame_arr(checkWiningCell());
-//                return checkWiningCell();
-//            }
-//            //  setGame_arr(getRandom());
-//            return getRandom();
-//        }
-//    }
-//
     //calculate movement of computer
     //Ramadan
     public int checkWiningCell() {
@@ -657,7 +491,7 @@ public class TicTacTocGame {
                             if (counter == 9) {
                                 gameNum++;
                                 recordObj.marchal();
-                                newGame();
+                                newGame("No one win! ");
 
                             }
                         }
@@ -686,7 +520,7 @@ public class TicTacTocGame {
                             if (counter == 9) {
                                 gameNum++;
                                 recordObj.marchal();
-                                newGame();
+                                newGame("No one win! ");
 
                             }
                         }
@@ -698,7 +532,7 @@ public class TicTacTocGame {
     }
 
     //*******************************
-    public void newGame() {
+    public void newGame(String msg) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -711,7 +545,7 @@ public class TicTacTocGame {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null, "replay the last game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                        int recordResult = JOptionPane.showConfirmDialog(null,msg+ "replay the last game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
                         if (recordResult == 0) {
                             displayRecord();
                             singlemodeController.play.setVisible(true);

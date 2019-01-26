@@ -35,7 +35,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public boolean requestGame(UserModel model1, UserModel player2) throws RemoteException {
-        int x = JOptionPane.showConfirmDialog(null, "player " + model1.getUserName() + " wants to play with you ");
+        int x = JOptionPane.showConfirmDialog(null, "player " + model1.getUserName() + " wants to play with you ","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
 
         if (x == 0) {
             Utils.setPlayer(model1);
@@ -78,7 +78,9 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                
                 try {
+                    Utils.isPlaying=false;
                     sceneHandler.setScene("/multimode/MultiMode.fxml", "Multi Mode", 800, 800, true);
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
@@ -94,6 +96,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
             @Override
             public void run() {
                 try {
+                    Utils.isPlaying=false;
                     JOptionPane.showMessageDialog(null, "server is shut down ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                     sceneHandler.setScene("/login/login.fxml", " login ", 800, 800, true);
                 } catch (IOException ex) {
@@ -124,8 +127,8 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
             }
 
             Platform.runLater(() -> {
+                try{
                 multiModeController.refreshListt();
-
                 Notifications notificationBuilder = Notifications.create()
                         .title("Online Player")
                         .text(user.getUserName() + message)
@@ -136,7 +139,12 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
                 AudioClip note = new AudioClip(getClass().getResource("/images/definite.mp3").toString());
                 note.play();
                 notificationBuilder.showInformation();
+                }catch(NoClassDefFoundError ex)
+                {
+                    System.err.println("ex catch");
+                }
             });
+           
 
         }
 

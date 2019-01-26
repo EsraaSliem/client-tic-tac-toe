@@ -89,6 +89,7 @@ public class SingleModeController implements Initializable {
                         System.out.println("more than 9 diits");
                         userName = dialog.getEditor().getText().substring(0, 9) + "..";
                     }
+
                 } else {
                     System.out.println("not Present");
                     userName = "No name";

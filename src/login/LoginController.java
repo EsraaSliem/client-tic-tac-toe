@@ -50,6 +50,7 @@ public class LoginController implements Initializable {
         try {
             UserAccountHandler accountHandler;
 
+
             accountHandler = Utils.establishConnection();
 
             UserModel model = accountHandler.login(new ClintImp(), txtUserName.getText(), txtPassword.getText());
