@@ -8,16 +8,13 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
-import multimode.MultiModeController;
-import multimode.MyControoler;
+import multimode.MultiModeView;
+import multimode.MyMultiModeController;
 import org.controlsfx.control.Notifications;
 import utils.SceneHandler;
 
@@ -26,7 +23,7 @@ import utils.Utils;
 public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     UserAccountHandler accountHandler;
-    MyControoler controoler = new MyControoler();
+    MyMultiModeController controoler = new MyMultiModeController();
     public static boolean isReceving;
     private SceneHandler sceneHandler;
     private String message = "";
@@ -56,7 +53,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
         controoler.startGame();
-        MultiModeController.getInstance().startgame();
+        MultiModeView.getInstance().startgame();
     }
 
     @Override
@@ -65,12 +62,12 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 //        controoler.dra(step);
         controoler.setStep(step);
         isReceving = true;
-        MultiModeController.getInstance().receive(step);
+        MultiModeView.getInstance().receive(step);
     }
 
     @Override
     public void receiverMessage(UserModel player1, String message) throws RemoteException {
-        MultiModeController.getInstance().print(player1, message);
+        MultiModeView.getInstance().print(player1, message);
     }
 
     @Override
@@ -110,7 +107,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void refreshOnlineUsersList(UserModel user, boolean isLoggedIn) throws RemoteException {
 
-        MultiModeController multiModeController = MultiModeController.getInstance();
+        MultiModeView multiModeController = MultiModeView.getInstance();
         if (multiModeController.onlineUsersList != null) {
             if (isLoggedIn) {
                 multiModeController.onlineUsersList.add(user);

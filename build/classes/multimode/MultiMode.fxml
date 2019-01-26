@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="650.0" maxWidth="1050.0" minHeight="650.0" minWidth="1050.0" prefHeight="650.0" prefWidth="1050.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="multimode.MultiModeController">
+<BorderPane maxHeight="650.0" maxWidth="1050.0" minHeight="650.0" minWidth="1050.0" prefHeight="650.0" prefWidth="1050.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="multimode.MultiModeView">
     <right>
         <AnchorPane maxHeight="650.0" maxWidth="450.0" minHeight="650.0" minWidth="450.0" prefHeight="650.0" prefWidth="450.0" style="-fx-background-color: #03A9F4;" BorderPane.alignment="CENTER">
             <children>
@@ -69,7 +69,7 @@
                         <Image url="@../images/refresh.png" />
                     </image>
                 </ImageView>
-                <Label contentDisplay="CENTER" layoutX="27.0" layoutY="108.0" prefHeight="25.0" prefWidth="261.0" style="-fx-text-fill: #fff;" text="double click on item to invite for playing online" textOverrun="CLIP">
+                <Label contentDisplay="CENTER" layoutX="27.0" layoutY="108.0" prefHeight="25.0" style="-fx-text-fill: #fff;" text="double click on item to invite for playing online" textOverrun="CLIP">
                     <font>
                         <Font size="15.0" />
                     </font>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sinup;
 
 import client.server.remote.interfaces.UserAccountHandler;
@@ -10,7 +5,6 @@ import client.server.remote.interfaces.UserModel;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
@@ -48,7 +42,6 @@ public class SignupController implements Initializable {
 
     @FXML
     void signupAction(ActionEvent event) throws IOException {
-        System.out.println("sin up was clicked ");
         try {
             if (!(Utils.validateName(txtUserName.getText()))) {
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "Please enter valid  name");
@@ -60,10 +53,10 @@ public class SignupController implements Initializable {
 
             }
             if (txtPassword.getText().trim().isEmpty() || txtPassword.getText().trim().length() <= 3) {
-                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "password must be 3 digits at least");
+                Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "password must be more than 3 digits ");
                 return;
             }
-            if (!(txtConfirmPassword.getText().equals(txtConfirmPassword.getText()))) {
+            if (!(txtConfirmPassword.getText().equals(txtPassword.getText()))) {
                 Utils.showAlert(Alert.AlertType.ERROR, btnSignUp.getScene().getWindow(), "Sin up  Error!", "password not confirmed");
                 return;
 
@@ -74,7 +67,8 @@ public class SignupController implements Initializable {
 
             }
             UserAccountHandler accountHandler = Utils.establishConnection();
-            if (accountHandler.signUp(new UserModel(txtUserName.getText(), txtEmailAddress.getText(), txtPassword.getText(), "1111"))) {
+//            String ipAddress, String userName, String password, String emailAddress
+            if (accountHandler.signUp(new UserModel("1111",txtUserName.getText(), txtPassword.getText() , txtEmailAddress.getText()))) {
                 handler.setScene("/login/login.fxml", "login", 500, 500, true);
 
             } else {
