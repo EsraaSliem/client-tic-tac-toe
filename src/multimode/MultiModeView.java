@@ -466,7 +466,8 @@ public class MultiModeView implements Initializable {
             txtFieldChat.setVisible(false);
             btnSendMessage.setVisible(false);
             userName.setText(Utils.getCurrentUser().getUserName());
-            scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
+            scoreLable.setText("" + accountHandler.getUpdatedScore(Utils.getCurrentUser().getEmailAddress()));
+            
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -807,16 +808,9 @@ public class MultiModeView implements Initializable {
                 || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
                 || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
                 || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
-            System.out.println("sorry you lose ");
             recordObj.marchal();
             newGame("you lose!");
-            try {
-                accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
-                scoreLable.setText("" + accountHandler.getUpdatedScore(Utils.getCurrentUser().getEmailAddress()));
-            } catch (RemoteException | NullPointerException ex) {
-                System.err.println("ex");
-
-            }
+         
             return true;
         } else if (counter >= 8) {
             recordObj.marchal();
