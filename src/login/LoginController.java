@@ -50,7 +50,6 @@ public class LoginController implements Initializable {
         try {
             UserAccountHandler accountHandler;
 
-
             accountHandler = Utils.establishConnection();
 
             UserModel model = accountHandler.login(new ClintImp(), txtUserName.getText(), txtPassword.getText());
@@ -69,7 +68,7 @@ public class LoginController implements Initializable {
             Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later ");
 
         } catch (NullPointerException ex) {
-            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "server is un available", "try again later ");
+            Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error  ", "wrong email or password");
         }
     }
 
