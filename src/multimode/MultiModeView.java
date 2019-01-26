@@ -46,6 +46,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javax.swing.JOptionPane;
 import utils.SceneHandler;
 import utils.Utils;
 import static utils.Utils.setSymbol;
@@ -148,8 +149,7 @@ public class MultiModeView implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        Utils.showAlert(Alert.AlertType.ERROR, btnEndGame.getScene().getWindow(), "Let's Play", " press ok to start game ");
-
+                        JOptionPane.showMessageDialog(null, "Let's Play", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                         try {
 
                             handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
@@ -307,8 +307,6 @@ public class MultiModeView implements Initializable {
         Utils.showAlert(Alert.AlertType.ERROR, btnEndGame.getScene().getWindow(), "", "sorry player " + Utils.getlPayer().getUserName() + " is playing now");
 
     }
-
-   
 
     private class UserListAdapter extends ListCell<UserModel> {
 
@@ -704,17 +702,16 @@ public class MultiModeView implements Initializable {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        Alert alert = new Alert(AlertType.CONFIRMATION);
-                        alert.setTitle("Confirmation Dialog");
-                        alert.setHeaderText(" replay the last game ?");
-                        Optional<ButtonType> result = alert.showAndWait();
-                        if (result.get() == ButtonType.OK) {
+                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+                        if (recordResult == 0) {
+
                             displayRecord();
                             btnEndGame.setVisible(false);
                             txtAreaChat.setVisible(false);
                             txtFieldChat.setVisible(false);
                             btnSendMessage.setVisible(false);
                             record.setVisible(true);
+
                         } else {
                             clearGrid();
                             myGridPane.setVisible(false);
@@ -987,7 +984,7 @@ public class MultiModeView implements Initializable {
     @FXML
     void btnEndGameAction(ActionEvent event) {
         try {
-            
+
             Utils.setIsPlaying(false);
 
             accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
@@ -1002,6 +999,7 @@ public class MultiModeView implements Initializable {
         }
 
     }
+
     public void refreshListt() {
         try {
             onlineUsersList = accountHandler.getOnlinePlayers();
