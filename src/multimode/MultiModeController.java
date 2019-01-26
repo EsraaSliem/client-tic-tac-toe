@@ -288,6 +288,7 @@ public class MultiModeController implements Initializable {
     }
 
     private void clearGrid() {
+        
         lable1.setText("");
         lable2.setText("");
         lable3.setText("");
@@ -297,6 +298,7 @@ public class MultiModeController implements Initializable {
         lable7.setText("");
         lable8.setText("");
         lable9.setText("");
+        counter=0;
         for (int i = 0; i < game_arr.length; i++) {
             game_arr[i] = 0;
         }
@@ -588,6 +590,7 @@ public class MultiModeController implements Initializable {
                                         @Override
                                         public void run() {
                                             if (Utils.isPlaying) {
+                                                 clearGrid();
                                                 myGridPane.setVisible(true);
                                                 txtAreaChat.setVisible(true);
                                                 txtFieldChat.setVisible(true);
@@ -658,6 +661,8 @@ public class MultiModeController implements Initializable {
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
             if (MyControoler.logOut()) {
+                Utils.isPlaying=false;
+                
                 //  System.out.println(MyControoler.logOut() + "xxx");
                 handler.setScene("/sinup/signup.fxml", " Sin up  ", 800, 800, true);
 
@@ -730,6 +735,7 @@ public class MultiModeController implements Initializable {
 
                         } else {
                             clearGrid();
+                            myGridPane.setVisible(false);
                             record.setVisible(false);
                             btnEndGame.setVisible(false);
                             txtAreaChat.setVisible(false);
@@ -807,7 +813,7 @@ public class MultiModeController implements Initializable {
             newGame("congratulation you win! ");
             try {
                 accountHandler.increaseWinnerScore(Utils.getCurrentUser().getEmailAddress());
-            } catch (RemoteException | NullPointerException ex) {           
+            } catch (RemoteException | NullPointerException  ex) {           
                 System.out.println("multimode.MultiModeController.checkWinner()");
                 Logger.getLogger(MultiModeController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1002,7 +1008,10 @@ public class MultiModeController implements Initializable {
             accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
             accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
             btnEndGame.setVisible(false);
-            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
+            clearGrid();
+            myGridPane.setVisible(false);
+            
+//            handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
 
         } catch (Exception ex) {
             System.out.println("remote ex");

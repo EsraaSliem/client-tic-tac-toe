@@ -54,7 +54,6 @@ public class LoginController implements Initializable {
 //            if (!Connection.isConneted()) {
 //                Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "Sin up  Error!", "check internet connection");
 //                return;
-//
 //            }
             accountHandler = Utils.establishConnection();
 

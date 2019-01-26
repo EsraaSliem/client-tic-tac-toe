@@ -81,7 +81,9 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                
                 try {
+                    Utils.isPlaying=false;
                     sceneHandler.setScene("/multimode/MultiMode.fxml", "Multi Mode", 800, 800, true);
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
@@ -97,6 +99,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
             @Override
             public void run() {
                 try {
+                    Utils.isPlaying=false;
                     JOptionPane.showMessageDialog(null, "server is shut down ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                     sceneHandler.setScene("/login/login.fxml", " login ", 800, 800, true);
                 } catch (IOException ex) {
