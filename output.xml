@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <game>
     <move>
-        <position>4</position>
-        <draw>X</draw>
+        <position>1</position>
+        <draw>x</draw>
     </move>
     <move>
-        <position>8</position>
-        <draw>O</draw>
+        <position>4</position>
+        <draw>o</draw>
+    </move>
+    <move>
+        <position>2</position>
+        <draw>x</draw>
     </move>
     <move>
         <position>5</position>
-        <draw>X</draw>
+        <draw>o</draw>
     </move>
     <move>
-        <position>7</position>
-        <draw>O</draw>
-    </move>
-    <move>
-        <position>3</position>
-        <draw>X</draw>
+        <position>0</position>
+        <draw>x</draw>
     </move>
 </game>

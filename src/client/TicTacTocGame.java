@@ -190,7 +190,6 @@ public class TicTacTocGame {
         return false;
     }
 
-
     //calculate movement of computer
     //Ramadan
     public int checkWiningCell() {
@@ -546,7 +545,7 @@ public class TicTacTocGame {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null,msg+ "replay the last game ?","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+                        int recordResult = JOptionPane.showConfirmDialog(null, msg + "replay the last game ?", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                         if (recordResult == 0) {
                             displayRecord();
                             singlemodeController.play.setVisible(true);

@@ -74,8 +74,8 @@ public class SingleModeController implements Initializable {
             while (!(Utils.validateName(userName))) {
                 System.out.println("looping");
 
-                dialog.setTitle("Welcom To TecTacToe Game");
-                dialog.setHeaderText("Look, a Text Input Dialog");
+                dialog.setTitle("TicTacToe");
+                dialog.setHeaderText("Welcom To TicTacToe Game");
                 dialog.setContentText("Please enter your name:");
                 Optional<String> result = dialog.showAndWait();
 
@@ -197,9 +197,13 @@ public class SingleModeController implements Initializable {
 
     @FXML
     void playAction(ActionEvent event) {
-      
 
-       
+        try {
+
+            handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -207,7 +211,5 @@ public class SingleModeController implements Initializable {
     void playHard(ActionEvent event) {
 
     }
-
-  
 
 }

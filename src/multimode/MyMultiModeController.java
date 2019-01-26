@@ -69,7 +69,6 @@ public class MyMultiModeController {
 
     public void startGame() {
         Utils.isPlaying = true;
-
     }
 
     boolean accept = false;
@@ -86,15 +85,13 @@ public class MyMultiModeController {
 
                     @Override
                     public void run() {
-
                         try {
-
                             if ((accountHandler = Utils.establishConnection()) != null && selectedItem != null) {
                                 try {
-                                    if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)) {
-
-                                    } else {
-                                        MultiModeView.getInstance().showrefusedMessahe();
+                                    if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)==0) {                                        
+                                        MultiModeView.getInstance().showBusyMessage();
+                                    } else if(accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)==2) {
+                                        MultiModeView.getInstance().showRefusedMessahe();
                                     }
                                 } catch (NullPointerException ex) {
                                     System.out.println("NullPointerException");
@@ -106,11 +103,12 @@ public class MyMultiModeController {
                                 } catch (RemoteException ex) {
                                     System.out.println("connection exception");
                                     JOptionPane.showMessageDialog(null, "ConnectException","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
-
                                 }
-
+                                catch(IllegalStateException ex)
+                                {
+                                    System.out.println("IllegalStateException()");
+                                }
                             }
-
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -121,10 +119,8 @@ public class MyMultiModeController {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
                 }
-
                 // UI update is run on the Application thread
                 Platform.runLater(updater);
-
             }
         }
         );

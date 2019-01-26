@@ -35,7 +35,7 @@ public class Utils {
     private static String symbol = "x";
     public static boolean isMyTurn;
     public static boolean logout;
-
+    
     public static void setSymbol(String symbol) {
         Utils.symbol = symbol;
     }
@@ -48,8 +48,16 @@ public class Utils {
     private static UserModel model = new UserModel();
     private static UserModel player2 = new UserModel();
 
-    static boolean b = false;
+    private static boolean b = false;
     public static boolean isPlaying = false;
+
+    public static void setIsPlaying(boolean b) {
+        isPlaying=b;
+    }
+    public static boolean getIsPlying() {
+        return isPlaying;
+        
+    }
     SceneHandler handler = SceneHandler.getInstance();
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
@@ -176,6 +184,5 @@ public class Utils {
         String currentdate = dateFormat.format(date);
         return currentdate;
     }
-   
 
 }
