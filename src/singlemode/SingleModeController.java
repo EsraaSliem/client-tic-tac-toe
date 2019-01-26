@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package singlemode;
 
 import java.io.IOException;
@@ -15,8 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javax.swing.JOptionPane;
 import client.TicTacTocGame;
+import java.util.Optional;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextInputDialog;
 import utils.SceneHandler;
@@ -74,22 +69,40 @@ public class SingleModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         game = new TicTacTocGame(this);
-        try {TextInputDialog dialog = new TextInputDialog();
-            while (!(Utils.validateName(userName))) {    
-                dialog.setTitle("TicTacToe");
-                dialog.setHeaderText("Welcom To TicTacToe Game");
+        try {
+            TextInputDialog dialog = new TextInputDialog();
+            while (!(Utils.validateName(userName))) {
+                System.out.println("looping");
+
+                dialog.setTitle("Welcom To TecTacToe Game");
+                dialog.setHeaderText("Look, a Text Input Dialog");
                 dialog.setContentText("Please enter your name:");
-                dialog.showAndWait();
-                
-                int x = dialog.getEditor().getText().length();
-                if (x < 9) {
-                    userName = dialog.getEditor().getText();// JOptionPane.showInputDialog("please enter your name : ");
+                Optional<String> result = dialog.showAndWait();
+
+                if (result.isPresent()) {
+                    System.out.println("isPresent");
+                    int x = dialog.getEditor().getText().length();
+                    if (x < 9) {
+                        System.out.println("more than 9 diits");
+                        userName = dialog.getEditor().getText();// JOptionPane.showInputDialog("please enter your name : ");
+                    } else {
+                        System.out.println("more than 9 diits");
+                        userName = dialog.getEditor().getText().substring(0, 9) + "..";
+                    }
+
                 } else {
-                    userName = dialog.getEditor().getText().substring(0, 9) + "..";
+                    System.out.println("not Present");
+                    userName = "No name";
+                    dialog.close();
+                    handler.setScene("/sinup/signup.fxml", "Sign Up", 800, 800, true);
                 }
+
             }
         } catch (NullPointerException ex) {
+            System.out.println("null pointer exception");
 
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
         username.setText(userName);
         lblCell1.setOnMouseClicked((event) -> {
@@ -97,7 +110,6 @@ public class SingleModeController implements Initializable {
                 game.gameStartSingleMode(lblCell1, 0);
             } else {
                 game.gameHardLevelSIngleMode(lblCell1, 0);
-
             }
         });
         lblCell2.setOnMouseClicked((event) -> {
@@ -186,14 +198,14 @@ public class SingleModeController implements Initializable {
     @FXML
     void playAction(ActionEvent event) {
       
-game.clearGrid();
+
        
 
     }
 
     @FXML
     void playHard(ActionEvent event) {
-        
+
     }
 
   
