@@ -66,7 +66,15 @@ public class TicTacTocGame {
     public void setUser2(UserModel user2) {
         this.user2 = user2;
     }
-
+public void clearGameArr()
+{
+    for(int i=0;i<game_arr.length;i++)
+    {
+        game_arr[i]=0;
+        
+    }
+    counter=0;
+}
     public int getScore() {
         return Score;
     }
@@ -552,11 +560,9 @@ public class TicTacTocGame {
 
                         } else {
 
-                            try {
-                                handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
-                            } catch (IOException ex) {
-                                Logger.getLogger(TicTacTocGame.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                         
+                                clearGrid();
+                           
                         }
 
                     }
@@ -593,5 +599,21 @@ public class TicTacTocGame {
                 }
             }
         }.start();
+    }
+      public void clearGrid() {
+        singlemodeController.lblCell1.setText("");
+        singlemodeController.lblCell2.setText("");
+        singlemodeController.lblCell3.setText("");
+        singlemodeController.lblCell4.setText("");
+        singlemodeController.lblCell5.setText("");
+        singlemodeController.lblCell6.setText("");
+        singlemodeController.lblCell7.setText("");
+        singlemodeController.lblCell8.setText("");
+        singlemodeController.lblCell9.setText("");
+        clearGameArr();
+        current_player = "X";
+        start_game_flag = false;
+       
+
     }
 }

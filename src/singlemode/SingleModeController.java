@@ -185,11 +185,9 @@ public class SingleModeController implements Initializable {
 
     @FXML
     void playAction(ActionEvent event) {
-        try {
-            handler.setScene("/singlemode/SingleMode.fxml", " Single Mode", 800, 800, true);
-        } catch (IOException ex) {
-            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
+game.clearGrid();
+       
 
     }
 
@@ -198,17 +196,6 @@ public class SingleModeController implements Initializable {
         
     }
 
-    public void clearGrid() {
-        lblCell1.setText("");
-        lblCell2.setText("");
-        lblCell3.setText("");
-        lblCell4.setText("");
-        lblCell5.setText("");
-        lblCell6.setText("");
-        lblCell7.setText("");
-        lblCell8.setText("");
-        lblCell9.setText("");
-
-    }
+  
 
 }
