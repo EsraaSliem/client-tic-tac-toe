@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <game>
     <move>
-        <position>4</position>
+        <position>8</position>
         <draw>x</draw>
     </move>
     <move>
@@ -9,15 +9,15 @@
         <draw>o</draw>
     </move>
     <move>
-        <position>5</position>
+        <position>4</position>
         <draw>x</draw>
     </move>
     <move>
-        <position>8</position>
+        <position>6</position>
         <draw>o</draw>
     </move>
     <move>
-        <position>3</position>
+        <position>0</position>
         <draw>x</draw>
     </move>
 </game>
