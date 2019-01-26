@@ -2,21 +2,14 @@
 <game>
     <move>
         <position>4</position>
-<<<<<<< HEAD
-        <draw>X</draw>
+        <draw>x</draw>
     </move>
     <move>
-        <position>2</position>
-        <draw>O</draw>
+        <position>7</position>
+        <draw>o</draw>
     </move>
     <move>
         <position>5</position>
-        <draw>X</draw>
-    </move>
-    <move>
-        <position>6</position>
-        <draw>O</draw>
-=======
         <draw>x</draw>
     </move>
     <move>
@@ -24,32 +17,7 @@
         <draw>o</draw>
     </move>
     <move>
-        <position>5</position>
-        <draw>x</draw>
-    </move>
-    <move>
         <position>3</position>
-        <draw>o</draw>
-    </move>
-    <move>
-        <position>7</position>
         <draw>x</draw>
-    </move>
-    <move>
-        <position>1</position>
-        <draw>o</draw>
-    </move>
-    <move>
-        <position>6</position>
-        <draw>x</draw>
-    </move>
-    <move>
-        <position>2</position>
-        <draw>o</draw>
->>>>>>> eea547c9bd1d07ef0fadabea7bd9b496a02c1758
-    </move>
-    <move>
-        <position>3</position>
-        <draw>X</draw>
     </move>
 </game>
