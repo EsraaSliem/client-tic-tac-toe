@@ -37,10 +37,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javax.swing.JOptionPane;
 import main.XMLRecord;
 import client.ClintImp;
 import client.TicTacTocGame;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import utils.SceneHandler;
@@ -121,6 +124,7 @@ public class MultiModeView implements Initializable {
     private SceneHandler handler;
     static MultiModeView m;
     int counter = 0;
+    int status;
 
     public MultiModeView() {
         try {
@@ -143,8 +147,7 @@ public class MultiModeView implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-
-                        JOptionPane.showMessageDialog(null, "Let's Play", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+                        Utils.showAlert(Alert.AlertType.ERROR, btnEndGame.getScene().getWindow(), "Let's Play", " press ok to start game ");
 
                         try {
 
@@ -238,8 +241,8 @@ public class MultiModeView implements Initializable {
     }
 
     void showRefusedMessahe() {
-        JOptionPane.showMessageDialog(null, "sorry player " + Utils.getlPayer().getUserName()
-                + " refused to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+        Utils.showAlert(Alert.AlertType.ERROR, btnEndGame.getScene().getWindow(), "", "sorry player " + Utils.getlPayer().getUserName()
+                + " refused to play with you ");
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -287,6 +290,7 @@ public class MultiModeView implements Initializable {
         lable2.setText("");
         lable3.setText("");
         lable4.setText("");
+
         lable5.setText("");
         lable6.setText("");
         lable7.setText("");
@@ -299,8 +303,43 @@ public class MultiModeView implements Initializable {
     }
 
     void showBusyMessage() {
-        JOptionPane.showMessageDialog(null, "sorry player " + Utils.getlPayer().getUserName()
-                + " is playing now", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+        Utils.showAlert(Alert.AlertType.ERROR, btnEndGame.getScene().getWindow(), "", "sorry player " + Utils.getlPayer().getUserName() + " is playing now");
+
+    }
+
+    public int requestGame(UserModel model1, UserModel player2) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("requestGame ");
+                if (Utils.getIsPlying()) {
+                    status = 0;
+                    System.out.println("is playing ");
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Dialog");
+                    alert.setHeaderText(" replay the last game ?");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        Utils.setPlayer(model1);
+                        Utils.setSymbol("o");
+                        Utils.isMyTurn = false;
+                        Utils.setIsPlaying(true);
+
+                        status = 1;
+                    } else {
+
+                        System.out.println("cancel ");
+                        status = 2;
+                    }
+
+                }
+
+            }
+        });
+
+        return status;
     }
 
     private class UserListAdapter extends ListCell<UserModel> {
@@ -477,13 +516,12 @@ public class MultiModeView implements Initializable {
 
                                 System.out.println(".run()");
                                 Utils.logout = false;
-                                JOptionPane.showMessageDialog(null, "second player terminated the game ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
+                                Utils.showAlert(Alert.AlertType.ERROR, btnEndGame.getScene().getWindow(), "", "second player terminated the game ");
 
                             }
 
                         }
                     });
-
                 }
             }).start();
             record.setVisible(false);
@@ -501,7 +539,6 @@ public class MultiModeView implements Initializable {
                     }
                 }
             }
-
             txtAreaChat.setEditable(false);
 
         } catch (RemoteException ex) {
@@ -547,13 +584,14 @@ public class MultiModeView implements Initializable {
     void btnRefreshAction(MouseEvent event) {
 
         try {
+            System.out.println("refresh");
             onlineUsersList = accountHandler.getOnlinePlayers();
-            scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
+
             list = FXCollections.observableArrayList(onlineUsersList);
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
                     System.out.println(list.get(i).getEmailAddress());
-
+                    scoreLable.setText(Long.toString(list.get(i).getScore()));
                     list.remove(i);
                 }
                 System.out.println("i = " + i);
@@ -685,7 +723,7 @@ public class MultiModeView implements Initializable {
     }
 
     public void newGame(String msg) {
-
+        Utils.setIsPlaying(false);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -698,16 +736,19 @@ public class MultiModeView implements Initializable {
                     @Override
                     public void run() {
                         recordObj.marchal();
-                        int recordResult = JOptionPane.showConfirmDialog(null, msg + " replay the last game ?", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
-                        if (recordResult == 0) {
+                        Alert alert = new Alert(AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmation Dialog");
+                        alert.setHeaderText(" replay the last game ?");
+                        //  alert.setContentText("Are you ok with this?");
 
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == ButtonType.OK) {
                             displayRecord();
                             btnEndGame.setVisible(false);
                             txtAreaChat.setVisible(false);
                             txtFieldChat.setVisible(false);
                             btnSendMessage.setVisible(false);
                             record.setVisible(true);
-
                         } else {
                             clearGrid();
                             myGridPane.setVisible(false);
@@ -827,6 +868,7 @@ public class MultiModeView implements Initializable {
     void imgViewAction(MouseEvent event) {
 
         try {
+            System.out.println("refresh image clicked");
             UserAccountHandler accountHandler1 = Utils.establishConnection();
             onlineUsersList = accountHandler1.getOnlinePlayers();
             list = FXCollections.observableArrayList(onlineUsersList);
@@ -834,7 +876,7 @@ public class MultiModeView implements Initializable {
             //remove current user from list
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getEmailAddress().equals(Utils.getCurrentUser().getEmailAddress())) {
-
+                    scoreLable.setText(Long.toString(list.get(i).getScore()));
                     list.remove(i);
                 }
             }
@@ -1008,7 +1050,7 @@ public class MultiModeView implements Initializable {
                     UserModel curruentUser = Utils.getCurrentUser();
                     if (emailAddress != null && curruentUser != null) {
                         if (emailAddress.equals(Utils.getCurrentUser().getEmailAddress())) {
-                            System.out.println(emailAddress);
+                            scoreLable.setText(Long.toString(list.get(i).getScore()));
                             list.remove(i);
                         }
                     }

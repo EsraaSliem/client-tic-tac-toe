@@ -5,11 +5,11 @@
         <draw>x</draw>
     </move>
     <move>
-        <position>8</position>
+        <position>4</position>
         <draw>o</draw>
     </move>
     <move>
-        <position>7</position>
+        <position>2</position>
         <draw>x</draw>
     </move>
     <move>
@@ -17,7 +17,7 @@
         <draw>o</draw>
     </move>
     <move>
-        <position>4</position>
+        <position>0</position>
         <draw>x</draw>
     </move>
 </game>

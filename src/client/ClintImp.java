@@ -8,8 +8,11 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import javax.swing.JOptionPane;
@@ -35,35 +38,15 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public int requestGame(UserModel model1, UserModel player2) throws RemoteException {
-        int status;
-        // 0 is playing 
-        // 1 accept
-        // 2  refuse 
+       
 
-        if (Utils.getIsPlying()) {
-            status = 0;
-        } else {
-            int x = JOptionPane.showConfirmDialog(null, "player " + model1.getUserName() + " wants to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
-
-            if (x == 0) {
-                Utils.setPlayer(model1);
-                Utils.setSymbol("o");
-                Utils.isMyTurn = false;
-                Utils.setIsPlaying(true);
-                status = 1;
-
-            } else {
-                status = 2;
-            }
-        }
-        return status;
+        return MultiModeView.getInstance().requestGame( model1, player2);
 
     }
 
     @Override
     public void startGame(UserModel player1, UserModel player2) throws RemoteException {
         controoler.startGame();
-        Utils.setIsPlaying(true);
         MultiModeView.getInstance().startgame();
     }
 
@@ -83,7 +66,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void closeGame() throws RemoteException {
-        
+
         Utils.setIsPlaying(false);
 
         System.err.println("entered fun 2");
@@ -110,6 +93,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
             public void run() {
                 try {
                     Utils.isPlaying = false;
+
                     JOptionPane.showMessageDialog(null, "server is shut down ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
                     sceneHandler.setScene("/login/login.fxml", " login ", 800, 800, true);
                 } catch (IOException ex) {

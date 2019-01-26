@@ -88,7 +88,6 @@ public class MyMultiModeController {
                     public void run() {
 
                         try {
-
                             if ((accountHandler = Utils.establishConnection()) != null && selectedItem != null) {
                                 try {
                                     if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)==0) {
