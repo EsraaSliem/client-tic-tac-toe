@@ -4,6 +4,7 @@ import client.server.remote.interfaces.Step;
 import client.server.remote.interfaces.UserAccountHandler;
 import client.server.remote.interfaces.UserModel;
 import java.rmi.ConnectException;
+import java.rmi.ConnectIOException;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -33,6 +34,10 @@ public class MyMultiModeController {
         } catch (NullPointerException ex) {
             Logger.getLogger(MyMultiModeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
+            Logger.getLogger(MyMultiModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(Exception ex)
+        {
             Logger.getLogger(MyMultiModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
@@ -86,11 +91,13 @@ public class MyMultiModeController {
                     @Override
                     public void run() {
                         try {
+                            
                             if ((accountHandler = Utils.establishConnection()) != null && selectedItem != null) {
                                 try {
-                                    if (accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)==0) {                                        
+                                    int reqResult=accountHandler.requestGame(Utils.getCurrentUser(), selectedItem);
+                                    if (reqResult==0) {                                        
                                         MultiModeView.getInstance().showBusyMessage();
-                                    } else if(accountHandler.requestGame(Utils.getCurrentUser(), selectedItem)==2) {
+                                    } else if(reqResult==2) {
                                         MultiModeView.getInstance().showRefusedMessahe();
                                     }
                                 } catch (NullPointerException ex) {

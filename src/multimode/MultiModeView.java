@@ -242,12 +242,14 @@ public class MultiModeView implements Initializable {
     }
 
     void showRefusedMessahe() {
-        Utils.showAlert(Alert.AlertType.ERROR, btnEndGame.getScene().getWindow(), "", "sorry player " + Utils.getlPayer().getUserName()
-                + " refused to play with you ");
+        JOptionPane.showMessageDialog(null,  "sorry player " + Utils.getlPayer().getUserName()
+                + " refused to play with you ","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+             if(!Utils.isPlaying)
+             {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
                         try {
@@ -262,10 +264,8 @@ public class MultiModeView implements Initializable {
                                         public void run() {
                                             if (Utils.isPlaying) {
                                                 myGridPane.setVisible(true);
-
                                             } else {
                                             }
-
                                         }
                                     });
                                 }
@@ -280,6 +280,7 @@ public class MultiModeView implements Initializable {
                         }
                     }
                 }
+            }
             }
         });
 
@@ -392,6 +393,8 @@ public class MultiModeView implements Initializable {
             listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
+                    if(!Utils.isPlaying)
+                    {
                     if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                         if (mouseEvent.getClickCount() == 2) {
                             try {
@@ -424,6 +427,7 @@ public class MultiModeView implements Initializable {
                             }
                         }
                     }
+                }
                 }
             });
 
@@ -466,7 +470,8 @@ public class MultiModeView implements Initializable {
             txtFieldChat.setVisible(false);
             btnSendMessage.setVisible(false);
             userName.setText(Utils.getCurrentUser().getUserName());
-            scoreLable.setText(Long.toString(Utils.getCurrentUser().getScore()));
+            scoreLable.setText("" + accountHandler.getUpdatedScore(Utils.getCurrentUser().getEmailAddress()));
+            
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -524,7 +529,8 @@ public class MultiModeView implements Initializable {
         myGridPane.setVisible(false);
 
         SceneHandler.getInstance().getStage().setOnCloseRequest((event) -> {
-            controoler.logOut();
+           // controoler.logOut();
+           btnLogout.fire();
         });
         txtFieldChat.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -581,6 +587,8 @@ public class MultiModeView implements Initializable {
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                if(!Utils.isPlaying)
+                {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
                         try {
@@ -619,6 +627,7 @@ public class MultiModeView implements Initializable {
                     }
                 }
             }
+            }
         });
 
     }
@@ -642,10 +651,17 @@ public class MultiModeView implements Initializable {
     @FXML
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
+            if(Utils.isPlaying==true)
+            { 
+                accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
+                accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+                Utils.isPlaying=false;
+               
+            }
             if (MyMultiModeController.logOut()) {
-
+               
                 handler.setScene("/sinup/signup.fxml", " Sin up  ", 800, 800, true);
-
+                
             } else {
                 util.missingConnection();
             }
@@ -689,7 +705,7 @@ public class MultiModeView implements Initializable {
     }
 
     public void newGame(String msg) {
-        Utils.setIsPlaying(false);
+        Utils.isPlaying=false;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -807,16 +823,10 @@ public class MultiModeView implements Initializable {
                 || (game_arr[0] == 2 && game_arr[3] == 2 && game_arr[6] == 2)
                 || (game_arr[1] == 2 && game_arr[4] == 2 && game_arr[7] == 2)
                 || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
-            System.out.println("sorry you lose ");
             recordObj.marchal();
             newGame("you lose!");
-            try {
-               
-                scoreLable.setText("" + accountHandler.getUpdatedScore(Utils.getCurrentUser().getEmailAddress()));
-            } catch (RemoteException | NullPointerException ex) {
-                System.err.println("ex");
 
-            }
+
             return true;
         } else if (counter >= 8) {
             recordObj.marchal();
@@ -991,6 +1001,11 @@ public class MultiModeView implements Initializable {
             btnEndGame.setVisible(false);
             clearGrid();
             myGridPane.setVisible(false);
+            record.setVisible(false);
+                          
+                            txtAreaChat.setVisible(false);
+                            txtFieldChat.setVisible(false);
+                            btnSendMessage.setVisible(false);
 
         } catch (Exception ex) {
             System.out.println("remote ex");

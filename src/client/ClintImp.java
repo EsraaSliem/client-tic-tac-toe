@@ -101,6 +101,8 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
             }
         });
     }
+    
+     
 
     @Override
     public void serverLogOut() throws RemoteException {

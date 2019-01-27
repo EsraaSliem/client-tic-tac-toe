@@ -56,6 +56,7 @@ public class LoginController implements Initializable {
             if (model != null) {
                 Utils.setCurrentUser(model);
                 handler.setScene("/multimode/MultiMode.fxml", " Multi Mode ", 800, 800, true);
+                Utils.isPlaying = false;
             } else {
                 Utils.showAlert(Alert.AlertType.ERROR, btnLogin.getScene().getWindow(), "error", "User is already logged in");
             }
