@@ -52,14 +52,14 @@ public class Utils {
     private static boolean b = false;
     public static boolean isPlaying = false;
 
-    public static void setIsPlaying(boolean b) {
-        bb = b;
-    }
-
-    public static boolean getIsPlying() {
-        return bb;
-
-    }
+//    public static void setIsPlaying(boolean b) {
+//        bb = b;
+//    }
+//
+//    public static boolean getIsPlying() {
+//        return bb;
+//
+//    }
     SceneHandler handler = SceneHandler.getInstance();
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

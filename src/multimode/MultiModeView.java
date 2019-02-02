@@ -242,45 +242,44 @@ public class MultiModeView implements Initializable {
     }
 
     void showRefusedMessahe() {
-        JOptionPane.showMessageDialog(null,  "sorry player " + Utils.getlPayer().getUserName()
-                + " refused to play with you ","TicTacToe",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "sorry player " + Utils.getlPayer().getUserName()
+                + " refused to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
 
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-             if(!Utils.isPlaying)
-             {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        try {
+                if (!Utils.isPlaying) {
+                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                        if (mouseEvent.getClickCount() == 2) {
+                            try {
 
-                            Utils.isMyTurn = true;
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
+                                Utils.isMyTurn = true;
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
 
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (Utils.isPlaying) {
-                                                myGridPane.setVisible(true);
-                                            } else {
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (Utils.isPlaying) {
+                                                    myGridPane.setVisible(true);
+                                                } else {
+                                                }
                                             }
-                                        }
-                                    });
-                                }
-                            }).start();
-                            model = listView.getSelectionModel().getSelectedItem();
-                            Utils.setPlayer(model);
-                            Utils.setSymbol("x");
-                            listView.setOnMouseClicked(null);
-                            MyMultiModeController.requestGame(Utils.getlPayer());
-                        } catch (RemoteException | NotBoundException | NullPointerException ex) {
-                            util.missingConnection();
+                                        });
+                                    }
+                                }).start();
+                                model = listView.getSelectionModel().getSelectedItem();
+                                Utils.setPlayer(model);
+                                Utils.setSymbol("x");
+                                listView.setOnMouseClicked(null);
+                                MyMultiModeController.requestGame(Utils.getlPayer());
+                            } catch (RemoteException | NotBoundException | NullPointerException ex) {
+                                util.missingConnection();
+                            }
                         }
                     }
                 }
-            }
             }
         });
 
@@ -393,41 +392,40 @@ public class MultiModeView implements Initializable {
             listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if(!Utils.isPlaying)
-                    {
-                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                        if (mouseEvent.getClickCount() == 2) {
-                            try {
+                    if (!Utils.isPlaying) {
+                        if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                            if (mouseEvent.getClickCount() == 2) {
+                                try {
 
-                                Utils.isMyTurn = true;
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
+                                    Utils.isMyTurn = true;
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
 
-                                        Platform.runLater(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (Utils.isPlaying) {
-                                                    myGridPane.setVisible(true);
-                                                } else {
+                                            Platform.runLater(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (Utils.isPlaying) {
+                                                        myGridPane.setVisible(true);
+                                                    } else {
+                                                    }
+
                                                 }
+                                            });
 
-                                            }
-                                        });
-
-                                    }
-                                }).start();
-                                model = listView.getSelectionModel().getSelectedItem();
-                                Utils.setPlayer(model);
-                                Utils.setSymbol("x");
-                                listView.setOnMouseClicked(null);
-                                MyMultiModeController.requestGame(Utils.getlPayer());
-                            } catch (RemoteException | NotBoundException | NullPointerException ex) {
-                                util.missingConnection();
+                                        }
+                                    }).start();
+                                    model = listView.getSelectionModel().getSelectedItem();
+                                    Utils.setPlayer(model);
+                                    Utils.setSymbol("x");
+                                    listView.setOnMouseClicked(null);
+                                    MyMultiModeController.requestGame(Utils.getlPayer());
+                                } catch (RemoteException | NotBoundException | NullPointerException ex) {
+                                    util.missingConnection();
+                                }
                             }
                         }
                     }
-                }
                 }
             });
 
@@ -471,7 +469,7 @@ public class MultiModeView implements Initializable {
             btnSendMessage.setVisible(false);
             userName.setText(Utils.getCurrentUser().getUserName());
             scoreLable.setText("" + accountHandler.getUpdatedScore(Utils.getCurrentUser().getEmailAddress()));
-            
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -529,8 +527,8 @@ public class MultiModeView implements Initializable {
         myGridPane.setVisible(false);
 
         SceneHandler.getInstance().getStage().setOnCloseRequest((event) -> {
-           // controoler.logOut();
-           btnLogout.fire();
+            // controoler.logOut();
+            btnLogout.fire();
         });
         txtFieldChat.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -587,46 +585,45 @@ public class MultiModeView implements Initializable {
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(!Utils.isPlaying)
-                {
-                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                    if (mouseEvent.getClickCount() == 2) {
-                        try {
+                if (!Utils.isPlaying) {
+                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                        if (mouseEvent.getClickCount() == 2) {
+                            try {
 
-                            Utils.isMyTurn = true;
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
+                                Utils.isMyTurn = true;
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
 
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (Utils.isPlaying) {
-                                                clearGrid();
-                                                myGridPane.setVisible(true);
-                                                txtAreaChat.setVisible(true);
-                                                txtFieldChat.setVisible(true);
-                                                btnSendMessage.setVisible(true);
-                                                btnEndGame.setVisible(true);
-                                            } else {
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (Utils.isPlaying) {
+                                                    clearGrid();
+                                                    myGridPane.setVisible(true);
+                                                    txtAreaChat.setVisible(true);
+                                                    txtFieldChat.setVisible(true);
+                                                    btnSendMessage.setVisible(true);
+                                                    btnEndGame.setVisible(true);
+                                                } else {
+                                                }
+
                                             }
+                                        });
 
-                                        }
-                                    });
-
-                                }
-                            }).start();
-                            model = listView.getSelectionModel().getSelectedItem();
-                            Utils.setPlayer(model);
-                            Utils.setSymbol("x");
-                            listView.setOnMouseClicked(null);
-                            MyMultiModeController.requestGame(Utils.getlPayer());
-                        } catch (RemoteException | NotBoundException | NullPointerException ex) {
-                            util.missingConnection();
+                                    }
+                                }).start();
+                                model = listView.getSelectionModel().getSelectedItem();
+                                Utils.setPlayer(model);
+                                Utils.setSymbol("x");
+                                listView.setOnMouseClicked(null);
+                                MyMultiModeController.requestGame(Utils.getlPayer());
+                            } catch (RemoteException | NotBoundException | NullPointerException ex) {
+                                util.missingConnection();
+                            }
                         }
                     }
                 }
-            }
             }
         });
 
@@ -651,17 +648,17 @@ public class MultiModeView implements Initializable {
     @FXML
     void logOutAction(ActionEvent event) throws RemoteException, IOException, NotBoundException {
         try {
-            if(Utils.isPlaying==true)
-            { 
+            
+            if (Utils.isPlaying == true) {
                 accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
                 accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
-                Utils.isPlaying=false;
-               
+                Utils.isPlaying = false;
+
             }
             if (MyMultiModeController.logOut()) {
-               
+
                 handler.setScene("/sinup/signup.fxml", " Sin up  ", 800, 800, true);
-                
+
             } else {
                 util.missingConnection();
             }
@@ -705,7 +702,7 @@ public class MultiModeView implements Initializable {
     }
 
     public void newGame(String msg) {
-        Utils.isPlaying=false;
+        Utils.isPlaying = false;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -825,7 +822,6 @@ public class MultiModeView implements Initializable {
                 || (game_arr[2] == 2 && game_arr[5] == 2 && game_arr[8] == 2)) {
             recordObj.marchal();
             newGame("you lose!");
-
 
             return true;
         } else if (counter >= 8) {
@@ -994,19 +990,16 @@ public class MultiModeView implements Initializable {
     @FXML
     void btnEndGameAction(ActionEvent event) {
         try {
-
-            Utils.setIsPlaying(false);
-            accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
+            Utils.isPlaying = false;
             accountHandler.increaseWinnerScore(Utils.getlPayer().getEmailAddress());
+            accountHandler.closeGame(Utils.getCurrentUser(), Utils.getlPayer());
             btnEndGame.setVisible(false);
             clearGrid();
             myGridPane.setVisible(false);
             record.setVisible(false);
-                          
-                            txtAreaChat.setVisible(false);
-                            txtFieldChat.setVisible(false);
-                            btnSendMessage.setVisible(false);
-
+            txtAreaChat.setVisible(false);
+            txtFieldChat.setVisible(false);
+            btnSendMessage.setVisible(false);
         } catch (Exception ex) {
             System.out.println("remote ex");
         }
@@ -1017,7 +1010,6 @@ public class MultiModeView implements Initializable {
         try {
             onlineUsersList = accountHandler.getOnlinePlayers();
             list = FXCollections.observableArrayList(onlineUsersList);
-
             if (list != null) {
                 for (int i = 0; i < list.size(); i++) {
                     String emailAddress = list.get(i).getEmailAddress();

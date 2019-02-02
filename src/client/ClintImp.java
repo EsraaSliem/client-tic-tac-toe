@@ -44,7 +44,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
         // 1 accept
         // 2  refuse 
 
-        if (Utils.getIsPlying()) {
+        if (Utils.isPlaying) {
             status = 0;
         } else {
             int x = JOptionPane.showConfirmDialog(null, "player " + model1.getUserName() + " wants to play with you ", "TicTacToe", JOptionPane.INFORMATION_MESSAGE);
@@ -53,7 +53,7 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
                 Utils.setPlayer(model1);
                 Utils.setSymbol("o");
                 Utils.isMyTurn = false;
-                Utils.setIsPlaying(true);
+                Utils.isPlaying=true;
                 status = 1;
 
             } else {
@@ -84,16 +84,17 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void closeGame() throws RemoteException {
 
-        Utils.setIsPlaying(false);
+       // Utils.isPlaying=false;
 
         System.err.println("entered fun 2");
         Utils.logout = true;
+        Utils.isPlaying = false;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
 
                 try {
-                    Utils.isPlaying = false;
+                   
                     sceneHandler.setScene("/multimode/MultiMode.fxml", "Multi Mode", 800, 800, true);
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
@@ -161,7 +162,6 @@ public class ClintImp extends UnicastRemoteObject implements ClientInterface {
             });
 
         }
-
         // Platform.runLater(runnable);
     }
 }

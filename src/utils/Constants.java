@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public interface Constants {
 
-    public final static String SERVER_IP_ADDRESS = "192.168.1.6";
+    public final static String SERVER_IP_ADDRESS = "192.168.1.3";
 
 
     public final static int PORT = 5000;

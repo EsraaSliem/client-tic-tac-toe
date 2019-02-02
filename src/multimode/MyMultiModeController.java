@@ -131,8 +131,7 @@ public class MyMultiModeController {
             }
         }
         );
-        thread.setDaemon(
-                true);
+        thread.setDaemon(true);
         thread.start();
 
     }
